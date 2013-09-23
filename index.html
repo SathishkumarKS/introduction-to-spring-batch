@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Introduction to Spring Batch</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="Introduction to Spring Batch">
+		<meta name="author" content="Chris Schaefer">
+		
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Introduction to Spring Batch</h1>
+				</section>
+				<section>
+					<h1>Hello!</h1>
+					<ul>
+						<li>Chris Schaefer</li>
+						<li>Principal Software Engineer at Pivotal</li>
+						<li>Spring Batch Team</li>
+						<li>Author of the <a href="http://refcardz.dzone.com/refcardz/spring-batch-refcard" target="_blank">DZone Spring Batch Reference Card</a></li>
+						<li>Twitter: <a href="http://www.twitter.com/chrisjs01" target="_blank">@chrisjs01</a></li>
+					</ul>
+				</section>
+				<section>
+					<h1>What is Spring Batch?</h1>
+					<blockquote>
+						<p>&ldquo;Spring Batch is a lightweight, comprehensive batch framework designed to enable the development of robust batch applications vital for the daily operations of enterprise systems.&rdquo;
+							<footer style="text-align:right;"> - Spring Batch Reference Guide</footer>
+						</p>
+					</blockquote>
+				</section>
+				<section>
+					<h2>Built upon Spring..</h2>
+					<blockquote>
+						<p>&ldquo;Spring Batch builds upon the productivity, POJO-based development approach, and general ease of use capabilities people have come to know from the Spring Framework, while making it easy for developers to access and leverage more advance enterprise services when necessary.&rdquo;
+							<footer style="text-align:right;"> - Spring Batch Reference Guide</footer>
+					</blockquote>
+				</section>
+				<section>
+					<h2>Where would I use it?</h2>
+					<ul>
+						<li class="fragment">Invoice generation</li>
+						<li class="fragment">Payroll</li>
+						<li class="fragment">Data export</li>
+						<li class="fragment" style="color:red;">Resizing cat images</li>
+						<li class="fragment">Pretty much anywhere you need to process things in batch</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Framework Overview</h1>
+					<ul>
+						<li class="fragment">Core</li>
+						<li class="fragment">Infrastructure</li>
+						<li class="fragment">Application</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Core</h2>
+					<p>Everything you need to execute and control a Job</p>
+					<blockquote>
+						<ul>
+							<li>JobOperator</li>
+							<li>JobLauncher</li>
+							<li>JobExplorer</li>
+							<li>JobRepository</li>
+						</ul>
+					</blockquote>
+				</section>
+				<section>
+					<h2>Infrastructure</h2>
+					<p>Lots of out of the box readers, writers and services. Key interfaces include:</p>
+					<blockquote>
+						<ul>
+							<li>ItemReader</li>
+							<li>ItemWriter</li>
+							<li>ItemProcessor</li>
+							<li>Tasklet</li>
+						</ul>
+					</blockquote>
+				</section>
+				<section>
+					<h2>Lets Read!</h2>
+					<center>
+						<table border="0" cellpadding="0" cellspacing="5">
+							<tr>
+								<td>AbstractItemCountingItemStreamItemReader</td>
+								<td>AggregateItemReader</td>
+							</tr>
+							<tr>
+								<td>AmqpItemReader</td>
+								<td>FlatFileItemReader</td>
+							</tr>
+							<tr>
+								<td>HibernateCursorItemReader</td>
+								<td>HibernatePagingItemReader</td>
+							</tr>
+							<tr>
+								<td>IbatisPagingItemReader</td>
+								<td>ItemReaderAdapter</td>
+							</tr>
+							<tr>
+								<td>JdbcCursorItemReader</td>
+								<td>JdbcPagingItemReader</td>
+							</tr>
+							<tr>
+								<td>JmsItemReader</td>
+								<td>JpaPagingItemReader</td>
+							</tr>
+							<tr>
+								<td>ListItemReader</td>
+								<td>MongoItemReader</td>
+							</tr>
+							<tr>
+								<td>Neo4jItemReader</td>
+								<td>RepositoryItemReader</td>
+							</tr>
+							<tr>
+								<td>StoredProcedureItemReader</td>
+								<td>StaxEventItemReader</td>
+							</tr>
+						</table>
+					</center>
+				</section>
+				<section>
+					<h2>Write!</h2>
+					<center>
+						<table border="0" cellpadding="0" cellspacing="5">
+							<tr>
+								<td>AbstractItemStreamItemWriter</td>
+								<td>AmqpItemWriter</td>
+							</tr>
+							<tr>
+								<td>CompositeItemWriter</td>
+								<td>FlatFileItemWriter</td>
+							</tr>
+							<tr>
+								<td>GemfireItemWriter</td>
+								<td>HibernateItemWriter</td>
+							</tr>
+							<tr>
+								<td>IbatisBatchItemWriter</td>
+								<td>ItemWriterAdapter</td>
+							</tr>
+							<tr>
+								<td>JdbcBatchItemWriter</td>
+								<td>JmsItemWriter</td>
+							</tr>
+							<tr>
+								<td>JpaItemWriter</td>
+								<td>MimeMessageItemWriter</td>
+							</tr>
+							<tr>
+								<td>MongoItemWriter</td>
+								<td>Neo4jItemWriter</td>
+							</tr>
+							<tr>
+								<td>PropertyExtractingDelegatingItemWriter</td>
+								<td>RepositoryItemWriter</td>
+							</tr>
+							<tr>
+								<td colspan="2">StaxEventItemWriter</td>
+							</tr>
+						</table>
+					</center>
+				</section>
+				<section>
+					<h2>Processing?</h2>
+					<p>ItemProcessor's are optional. You can modify the provided object or return an entirely new type. Want to process those items before writing them? Meet the ItemProcessor interface:</p>
+					<pre><code data-trim style="font-size: 25px; ">
+import org.springframework.batch.item.ItemProcessor;
+
+public class CatItemProcessor implements ItemProcessor&lt;Cat, Cat&gt; {
+    @Override
+    public Cat process(Cat item) throws Exception {
+        if (item.getWeight() &gt;= 14.75d) {
+            item.setSize(&quot;LARGE&quot;);
+        }
+
+        return item;
+    }
+}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Read, Process, Write - Chunk Oriented Processing</h2>
+					<img src="images/chunkoriented.png" border="0"/>
+				</section>
+				<section>
+					<h2>Don't need Chunk Oriented Processing?</h2>
+					<p>Implement a Tasklet (more on this later)!</p>
+					<pre><code data-trim style="font-size: 17px; ">
+package org.springframework.batch.core.step.tasklet;
+
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.repeat.RepeatStatus;
+
+public interface Tasklet {
+    RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception;
+}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Application</h2>
+					<p>This is where your batch job configuration and custom batch code lives</p>
+				</section>
+				<section>
+					<h1>Job</h1>
+					<p>A Job encapsulates all the components and attributes that make up your batch job</p>
+				</section>
+				<section>
+					<h2>Example Job Configuration</h2>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+    &lt;batch:job id=&quot;catJob&quot; restartable=&quot;true&quot;&gt;
+        &lt;batch:listeners&gt;
+            &lt;batch:listener after-job-method=&quot;sendCompleteEmail&quot; ref=&quot;notificationService&quot;/&gt;
+        &lt;/batch:listeners&gt;
+        &lt;batch:step id=&quot;exportCatData&quot;&gt;
+            &lt;batch:tasklet allow-start-if-complete=&quot;true&quot;&gt;
+                &lt;batch:chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; writer=&quot;catExportWriter&quot;
+                             commit-interval=&quot;200&quot;/&gt;
+            &lt;/batch:tasklet&gt;
+            &lt;batch:fail on=&quot;FAILED&quot;/&gt;
+            &lt;batch:next on=&quot;*&quot; to=&quot;postCatData&quot;/&gt;
+        &lt;/batch:step&gt;
+        &lt;batch:step id=&quot;postCatData&quot;&gt;
+            &lt;batch:tasklet ref=&quot;catDataPostTasklet&quot;/&gt;
+        &lt;/batch:step&gt;
+    &lt;/batch:job&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h1>Step</h1>
+					<p>Step's encapsulate the specific components and configuration needed to define the processing for that part of the Job.</p>
+				</section>
+				<section>
+					<h2>Basic Chunk Oriented Step Example</h2>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+&lt;batch:step id=&quot;exportCatData&quot;&gt;
+    &lt;batch:tasklet allow-start-if-complete=&quot;true&quot;&gt;
+        &lt;batch:chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; writer=&quot;catExportWriter&quot; commit-interval=&quot;200&quot;/&gt;
+    &lt;/batch:tasklet&gt;
+    ...
+&lt;/batch:step&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>... Skippable and retryable exception types</h2>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+&lt;batch:step id=&quot;exportCatData&quot;&gt;
+    &lt;batch:tasklet allow-start-if-complete=&quot;true&quot;&gt;
+        &lt;batch:chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; writer=&quot;catExportWriter&quot; commit-interval=&quot;200&quot;
+                     skip-limit=&quot;20&quot; retry-limit=&quot;5&quot;&gt;
+            &lt;batch:skippable-exception-classes&gt;
+                &lt;batch:include class=&quot;com.example.ValidationException&quot;/&gt;
+            &lt;/batch:skippable-exception-classes&gt;
+            &lt;batch:retryable-exception-classes&gt;
+                &lt;batch:include class=&quot;com.example.DeadLockException&quot;/&gt;
+            &lt;/batch:retryable-exception-classes&gt;
+        &lt;/batch:chunk&gt;
+    &lt;/batch:tasklet&gt;
+    ...
+&lt;/batch:step&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>... Transaction and rollback control</h2>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+&lt;batch:step id=&quot;exportCatData&quot;&gt;
+    &lt;batch:tasklet allow-start-if-complete=&quot;true&quot;&gt;
+        &lt;batch:chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; writer=&quot;catExportWriter&quot; commit-interval=&quot;200&quot;/&gt;
+        &lt;batch:transaction-attributes isolation=&quot;DEFAULT&quot; propagation=&quot;REQUIRED&quot; timeout=&quot;30&quot;/&gt;
+        &lt;batch:no-rollback-exception-classes&gt;
+            &lt;batch:include class=&quot;com.example.DontRollbackOnMeException&quot;/&gt;
+        &lt;/batch:no-rollback-exception-classes&gt;
+    &lt;/batch:tasklet&gt;
+    ...
+&lt;/batch:step&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>... And some interception and inheritance</h2>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+&lt;batch:step id=&quot;parentStep&quot; abstract=&quot;true&quot;&gt;
+    &lt;batch:listeners&gt;
+        &lt;batch:listener on-write-error-method=&quot;logWriteError&quot; ref=&quot;loggingService&quot;/&gt;
+    &lt;/batch:listeners&gt;
+&lt;/batch:step&gt;
+        
+&lt;batch:step id=&quot;exportCatData&quot; parent=&quot;parentStep&quot;&gt;
+    &lt;batch:tasklet allow-start-if-complete=&quot;true&quot;&gt;
+        &lt;batch:chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; writer=&quot;catExportWriter&quot; commit-interval=&quot;200&quot;/&gt;
+        &lt;batch:listeners merge=&quot;true&quot;&gt;
+            &lt;batch:listener on-process-error-method=&quot;logProcessError&quot; ref=&quot;loggingService&quot;/&gt;
+        &lt;/batch:listeners&gt;
+    &lt;/batch:tasklet&gt;
+    ...
+&lt;/batch:step&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Tasklet Step</h2>
+					<p>... Sometimes Chunk Oriented Processing isn't needed for the Step at hand</p>
+					<p>Simple step configuration:</p>
+					<pre><code data-trim style="font-size: 15px; class="xml">
+&lt;batch:step id=&quot;deleteOldCatImages&quot;&gt;
+    &lt;batch:tasklet&gt;
+        &lt;beans:bean class=&quot;com.example.DeleteOldCatImagesTasklet&quot;/&gt;
+    &lt;/batch:tasklet&gt;
+    ...
+&lt;/batch:step&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Tasklet Step</h2>
+					<p>Simple Tasklet implementation:</p>
+					<pre><code data-trim style="font-size: 15px;">
+package com.example;
+
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.repeat.RepeatStatus;
+
+public class DeleteOldCatImagesTasklet implements Tasklet {
+    @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        // Delete all old images
+        return RepeatStatus.FINISHED;
+    }
+}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Step Scope and Late Binding</h2>
+					<ul>
+						<li>Step scoped beans are only instantiated when the Step starts</li>
+						<li>Enables late binding</li>
+					</ul>
+					<pre><code data-trim style="font-size: 15px;">
+&lt;beans:bean id=&quot;reader&quot; scope=&quot;step&quot; class=&quot;com.example.Reader&quot;&gt;
+    &lt;beans:property name=&quot;file&quot; value=&quot;#{jobParameters[&#39;file.name&#39;]}&quot; /&gt;
+&lt;/beans:bean&gt;
+
+&lt;beans:bean id=&quot;reader&quot; scope=&quot;step&quot; class=&quot;com.example.Reader&quot;&gt;
+    &lt;beans:property name=&quot;file&quot; value=&quot;#{jobExecutionContext[&#39;file.name&#39;]}&quot; /&gt;
+&lt;/beans:bean&gt;
+
+&lt;beans:bean id=&quot;reader&quot; scope=&quot;step&quot; class=&quot;com.example.Reader&quot;&gt;
+    &lt;beans:property name=&quot;file&quot; value=&quot;#{stepExecutionContext[&#39;file.name&#39;]}&quot; /&gt;
+&lt;/beans:bean&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Step Flow</h2>
+					<p>Step's terminate with an exit status which can be used to conditionally control a flow</p>
+					<pre><code data-trim style="font-size: 15px;">
+&lt;!-- Simple sequential flow configured as a Step attribute --&gt;
+&lt;batch:step id=&quot;exportCatData&quot; next=&quot;postCatData&quot;&gt;
+
+&lt;!-- Fail the job with a batch status of FAILED and an optional exit status of EXPORT_FAILED --&gt;
+&lt;batch:fail on=&quot;FAILED&quot; exit-code=&quot;EXPORT_FAILED&quot;/&gt;
+
+&lt;!-- End the job with a batch status of COMPLETED. An exit-status is optional --&gt;
+&lt;batch:end on=&quot;COMPLETED&quot;/&gt;
+
+&lt;!-- Transition to exportMoreCatData if the exit status is NEEDS_MORE_PROCESSING --&gt;
+&lt;batch:next on=&quot;NEEDS_MORE_PROCESSING&quot; to=&quot;exportMoreCatData&quot;/&gt;
+
+&lt;!-- Stop the job with a batch status of STOPPED. When the job is restarted, start on stepToRestartOn --&gt;
+&lt;batch:stop on=&quot;JOB_TIRED&quot; restart=&quot;stepToRestartOn&quot;/&gt;
+					</code></pre>
+					<p>The "on" attribute supports pattern matching of "*" for zero or more characters, "?" matches exactly one character</p>
+				</section>
+				<section>
+					<h2>Step Flow</h2>
+					<p>Need to return a special exit status? Implement StepExecutionListener or extend StepExecutionListenerSupport and register it as a listener on your step</p>
+					<pre><code data-trim style="font-size: 15px;">
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.listener.StepExecutionListenerSupport;
+
+public class FilteredRecordStepListener extends StepExecutionListenerSupport {
+    @Override
+    public ExitStatus afterStep(StepExecution stepExecution) {
+        if (stepExecution.getFilterCount() > 0) {
+            return new ExitStatus("COMPLETED WITH FILTERED RECORDS");
+        }
+
+        return null;
+    }
+}
+					</code></pre>
+				</section>
+				<section>
+					<h2>Step Flow</h2>
+					<p>Deciders - Some decisions are harder to make then others..</p>
+					<pre><code data-trim style="font-size: 15px;" class="xml">
+&lt;batch:step id=&quot;step1&quot; next=&quot;decider&quot;/&gt;
+        
+&lt;batch:decision id=&quot;decider&quot; decider=&quot;decisionMaker&quot;&gt;
+    &lt;batch:next on=&quot;GOOD&quot; to=&quot;step5&quot;/&gt;
+    &lt;batch:next on=&quot;BAD&quot; to=&quot;step2&quot;/&gt;
+&lt;/batch:decision&gt;
+					</code></pre>
+					<pre><code data-trim style="font-size: 15px;">
+public class DecisionMaker implements JobExecutionDecider {
+    @Override
+    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+        // Make intelligent decision here
+        String exitStatus = (new Random().nextInt() % 2 == 0) ? "GOOD" : "BAD";
+
+        return new FlowExecutionStatus(exitStatus);
+    }
+}
+					</code></pre>
+				</section>
+				<section>
+					<h1>Configuration Options</h1>
+					<ul>
+						<li class="fragment">XML</li>
+						<li class="fragment">Annotations</li>
+						<li class="fragment">Java Config</li>
+					</ul>
+				</section>
+				<section>
+					<h2>XML Configuration</h2>
+					<p>As seen in the presentation samples. Robust batch namespace support makes Job configuration clean and concise.</p>
+				</section>
+				<section>
+					<h2>Annotations</h2>
+					<p>Job's cannot be built only using annotations, but various exist for classes providing call back support.</p>
+					<center>
+						<table border="0" cellpadding="0" cellspacing="5">
+							<tr>
+								<td>AfterChunk</td>
+								<td>AfterChunkError</td>
+								<td>AfterJob</td>
+								<td>AfterProcess</td>
+							</tr>
+							<tr>
+								<td>AfterRead</td>
+								<td>AfterStep</td>
+								<td>AfterWrite</td>
+								<td>BeforeChunk</td>
+							</tr>
+							<tr>
+								<td>BeforeJob</td>
+								<td>BeforeProcess</td>
+								<td>BeforeRead</td>
+								<td>BeforeStep</td>
+							</tr>
+							<tr>
+								<td>BeforeWrite</td>
+								<td>OnProcessError</td>
+								<td>OnReadError</td>
+								<td>OnSkipInProcess</td>
+							</tr>
+							<tr>
+								<td>OnSkipInRead</td>
+								<td>OnSkipInWrite</td>
+								<td>OnWriteError</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</center>
+				</section>
+				<section>
+					<h2>Java Configuration</h2>
+					<p>As of Spring Batch 2.2 Java Configuration can be enabled by marking your class with @EnableBatchConfiguration</p>
+					<pre><code data-trim style="font-size: 15px;">
+@Configuration
+@EnableBatchProcessing
+public class AppConfig {
+    @Autowired private JobBuilderFactory jobs;
+    @Autowired private StepBuilderFactory steps;
+
+    @Bean public Job job() {
+        return jobs.get("cleanFilesJob").start(step1(tasklet())).build();
+    }
+
+    @Bean protected Step step1(Tasklet tasklet) {
+        return steps.get("step1").tasklet(tasklet).build();
+    }
+
+    // Remaining Job building code
+}
+					</code></pre>
+				</section>
+				<section>
+					<h1>Job Execution</h1>
+					<ul>
+						<li class="fragment">Scheduling</li>
+						<li class="fragment">Command line execution</li>
+						<li class="fragment">Execution in a web container</li>
+						<li class="fragment">JMX</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Scheduling</h2>
+					<p>Spring Batch does not provide a scheduler, feel free to take your pick (Quartz, Cron, Control-M, etc)</p>
+				</section>
+				<section>
+					<h2>Command Line Execution</h2>
+					<p>The CommandLineJobRunner class is provided out of the box.</p>
+					<ul>
+						<li>jobPath</li>
+						<li>-restart (optional)</li>
+						<li>-stop (optional)</li>
+						<li>-abandon (optional)</li>
+						<li>-next (optional)</li>
+						<li>jobName</li>
+						<li>jobParameters (key=value)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Execution in a Web Container</h2>
+					<p>Simple as injecting job dependencies and running the Job. Make sure to configure the JobLauncher with your preferred TaskExecutor!</p>
+						<pre><code data-trim style="font-size: 15px;">
+@Controller
+public class JobLauncherController {
+    @Autowired
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private Job job;
+
+    @RequestMapping("/jobLauncher.html")
+    public void handle() throws Exception{
+        jobLauncher.run(job, new JobParameters());
+    }
+}
+						</code></pre>
+				</section>
+				<section>
+					<h2>JMX</h2>
+					<p>Job execution can be controlled and monitored by exposing core objects through standard Spring JMX. The JobOperator provides a wealth of functionality with simple types making it an ideal candidate.</p>
+				</section>
+				<section>
+					<h1>Scaling</h1>
+					<ul>
+						<li class="fragment">Multi-threaded Step</li>
+						<li class="fragment">Parallel Steps</li>
+						<li class="fragment">Partitioning</li>
+						<li class="fragment">Remote Chunking</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Multi-threaded Step</h2>
+					<p>Single process &amp; super easy to configure</p>
+						<pre><code data-trim style="font-size: 15px;" class="xml">
+&lt;batch:step id=&quot;loading&quot;&gt;
+  &lt;batch:tasklet task-executor=&quot;taskExecutor&quot; throttle-limit=&quot;20&quot;&gt;
+  ...
+  &lt;/batch:tasklet&gt;
+&lt;/batch:step&gt;
+						</code></pre>
+				</section>
+				<section>
+					<h2>Parallel Steps</h2>
+					<p>Single process</p>
+						<pre><code data-trim style="font-size: 15px;" class="xml">
+&lt;batch:split id=&quot;split1&quot; task-executor=&quot;taskExecutor&quot; next=&quot;step4&quot;&gt;
+    &lt;batch:flow&gt;
+        &lt;batch:step id=&quot;step1&quot; next=&quot;step2&quot;/&gt;
+        &lt;batch:step id=&quot;step2&quot;/&gt;
+    &lt;/batch:flow&gt;
+    &lt;batch:flow&gt;
+        &lt;batch:step id=&quot;step3&quot;/&gt;
+    &lt;/batch:flow&gt;
+&lt;/batch:split&gt;
+
+&lt;batch:step id=&quot;step4&quot;/&gt;
+						</code></pre>
+				</section>
+				<section>
+					<h2>Partitioning</h2>
+					<p>Single or multi process - First some configuration</p>
+						<pre><code data-trim style="font-size: 15px;" class="xml">
+&lt;batch:job id=&quot;partitionJob&quot;&gt;
+    &lt;batch:step id=&quot;master&quot;&gt;
+        &lt;batch:partition step=&quot;slave&quot; partitioner=&quot;partitioner&quot;&gt;
+            &lt;batch:handler grid-size=&quot;10&quot; task-executor=&quot;taskExecutor&quot; /&gt;
+        &lt;/batch:partition&gt;
+    &lt;/batch:step&gt;
+&lt;/batch:job&gt;
+
+&lt;batch:step id=&quot;slave&quot;&gt;
+    &lt;batch:tasklet&gt;
+        &lt;batch:chunk reader=&quot;itemReader&quot; writer=&quot;itemWriter&quot; processor=&quot;itemProcessor&quot; commit-interval=&quot;200&quot; /&gt;
+    &lt;/batch:tasklet&gt;
+&lt;/batch:step&gt;
+
+&lt;beans:bean id=&quot;partitioner&quot; class=&quot;com.example.MyPartitioner&quot; /&gt;
+
+&lt;beans:bean id=&quot;taskExecutor&quot; class=&quot;org.springframework.core.task.SimpleAsyncTaskExecutor&quot; /&gt;
+						</code></pre>
+				</section>
+				<section>
+					<h2>Partitioning</h2>
+					<p>... Then some implementation</p>
+						<pre><code data-trim style="font-size: 15px;">
+public class MyPartitioner implements Partitioner {
+    @Override
+    public Map&lt;String, ExecutionContext&gt; partition(int gridSize) {
+        Map&lt;String, ExecutionContext&gt; executionContexts = new HashMap&lt;String, ExecutionContext&gt;();
+
+        for (int i = 1; i &lt;= gridSize; i++) {
+            ExecutionContext executionContext = new ExecutionContext();
+            // Intelligently generate a start and end id for this iteration
+            executionContext.putInt(&quot;startId&quot;, startId);
+            executionContext.putInt(&quot;endId&quot;, endId);
+
+            executionContexts.put(&quot;partition&quot; + i, executionContext);
+        }
+
+        return executionContexts;
+    }
+}
+						</code></pre>
+				</section>
+				<section>
+					<h2>Partitioning</h2>
+					<p>... Access the values!</p>
+						<pre><code data-trim style="font-size: 15px;">
+&lt;beans:bean id=&quot;itemWriter&quot; class=&quot;org.springframework.batch.item.file.FlatFileItemWriter&quot; scope=&quot;step&quot;&gt;
+    &lt;beans:property name=&quot;resource&quot; value=&quot;file:#{stepExecutionContext[startId]}-#{stepExecutionContext[endId]}.csv&quot; /&gt;
+    ...
+    &lt;/beans:bean&gt;	
+&lt;/batch:job&gt;
+						</code></pre>
+				</section>
+				<section>
+					<h2>Remote Chunking</h2>
+					<p>Multi process</p>
+					<ul>
+						<li>Step processing spread across multiple processes</li>
+						<li>Communicate through durable middleware (AMQP, JMS, etc.)</li>
+						<li>Most useful when the processing of items is more expensive than reading</li>
+						<li>Batch Integration module of Batch Admin provides implementations using Spring Integration</li>
+					</ul>
+				</section>
+				<section>
+					<h1>JSR-352</h1>
+					<ul>
+						<li class="fragment">What is it?</li>
+						<li class="fragment">Does Spring Batch support it?</li>
+						<li class="fragment">When will it be ready?</li>
+					</ul>
+				</section>
+				<section>
+					<h1>?'s</h1>
+				</section>
+				<section>
+					<h1 style="color:green;">Thank You!</h1>
+				</section>
+			</div>
+			<img src="images/SpringByPivotal.png" style="margin:10px;position:fixed;right:0px;bottom:0px;"/>
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script>
+			Reveal.initialize({
+				transition: 'linear',
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+				width: 1280,
+				height: 720,
+				margin: 0.1,
+				minScale: 0.2,
+    			maxScale: 1.0,
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+	</body>
+</html>
