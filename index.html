@@ -65,6 +65,14 @@
 					</blockquote>
 				</section>
 				<section>
+				        <h2>Where do I get it?</h2>
+					<ul>
+					  <li>Project home: <a href="http://docs.spring.io/spring-batch/" target="_blank">http://docs.spring.io/spring-batch</a></li>
+					  <li>Github: <a href="https://github.com/spring-projects/spring-batch" target="_blank">https://github.com/spring-projects/spring-batch</a></li>
+					  <li>Downloads: <a href="http://docs.spring.io/spring-batch/downloads.html" target="_blank">http://docs.spring.io/spring-batch/downloads.html</a></li>
+					</ul>
+				</section>
+				<section>
 					<h2>Where would I use it?</h2>
 					<ul>
 						<li class="fragment">Invoice generation</li>
@@ -431,6 +439,22 @@ public class FilteredRecordStepListener extends
 					</code></pre>
 				</section>
 				<section>
+					<h2>Step Flow - Exit Code Mapping</h2>
+					<p>Convert your custom exit status to a process exit code. SimpleJvmExitCodeMapper is the default registered implementation.</p>
+					<pre><code data-trim class="java">
+public interface ExitCodeMapper {
+        static int JVM_EXITCODE_COMPLETED = 0;
+        static int JVM_EXITCODE_GENERIC_ERROR = 1;
+        static int JVM_EXITCODE_JOB_ERROR = 2;
+
+        public static final String NO_SUCH_JOB = "NO_SUCH_JOB";
+        public static final String JOB_NOT_PROVIDED = "JOB_NOT_PROVIDED";
+
+        public int intValue(String exitCode);
+}
+					</code></pre>
+				</section>
+				<section>
 					<h2>Step Flow</h2>
 					<p>Deciders - Some decisions are harder to make then others..</p>
 					<pre><code data-trim class="xml">
@@ -690,6 +714,12 @@ public class MyPartitioner implements Partitioner {
 						<li class="fragment">Does Spring Batch support it?</li>
 						<li class="fragment">When will it be ready?</li>
 					</ul>
+				</section>
+				<section>
+				  <h2>Job Quickstart</h2>
+				  <ul>
+				    <li>Maven archetype: <a href="http://bit.ly/1fF0gv7" target="_blank">http://bit.ly/1fF0gv7</a></li>
+				  </ul>
 				</section>
 				<section>
 					<h1>?'s</h1>
