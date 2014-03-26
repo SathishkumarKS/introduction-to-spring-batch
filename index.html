@@ -45,7 +45,12 @@
 						<li>Chris Schaefer</li>
 						<li>Principal Software Engineer at Pivotal</li>
 						<li>Spring Batch Team</li>
-						<li>Author of the <a href="http://refcardz.dzone.com/refcardz/spring-batch-refcard" target="_blank">DZone Spring Batch Reference Card</a></li>
+						<li>DZone Reference Card Publications:
+							<ul>
+								<li><a href="http://refcardz.dzone.com/refcardz/spring-batch-refcard" target="_blank">Spring Batch Reference Card</a></li>
+								<li><a href="http://refcardz.dzone.com/refcardz/spring-integration" target="_blank">Spring Integration Reference card</a>
+							</ul>
+						</li>
 						<li>Twitter: <a href="http://www.twitter.com/chrisjs01" target="_blank">@chrisjs01</a></li>
 					</ul>
 				</section>
@@ -214,11 +219,15 @@ public class CatItemProcessor implements ItemProcessor&lt;Cat, Cat&gt; {
 				</section>
 				<section>
 					<h2>Read, Process, Write - Chunk Oriented Processing</h2>
-					<img src="images/chunkoriented.png" border="0"/>
+					<ul>
+						<li>Read items</li>
+						<li>Optionally process items</li>
+						<li>Write items</li>
+						<li>Fault tolerance</li>
 				</section>
 				<section>
 					<h2>Don't need Chunk Oriented Processing?</h2>
-					<p>Implement a Tasklet (more on this later)!</p>
+					<p>Implement a Tasklet</p>
 					<pre><code data-trim class="java">
 package org.springframework.batch.core.step.tasklet;
 
@@ -489,7 +498,7 @@ public class DecisionMaker implements JobExecutionDecider {
 				</section>
 				<section>
 					<h2>XML Configuration</h2>
-					<p>As seen in the presentation samples. Robust batch namespace support makes Job configuration clean and concise.</p>
+					<p>Robust batch namespace support makes Job configuration clean and concise.</p>
 				</section>
 				<section>
 					<h2>Annotations</h2>
@@ -619,6 +628,7 @@ public class JobLauncherController {
   &lt;/tasklet&gt;
 &lt;/step&gt;
 						</code></pre>
+					<p>Reading, processing and writing of each chunk of items is done in its own separate thread.</p>
 				</section>
 				<section>
 					<h2>Parallel Steps</h2>
@@ -704,7 +714,7 @@ public class MyPartitioner implements Partitioner {
 						<li>Step processing spread across multiple processes</li>
 						<li>Communicate through durable middleware (AMQP, JMS, etc.)</li>
 						<li>Most useful when the processing of items is more expensive than reading</li>
-						<li>Batch Integration module of Batch Admin provides implementations using Spring Integration</li>
+						<li>Batch Integration module of Spring Batch provides implementations utilizing Spring Integration</li>
 					</ul>
 				</section>
 				<section>
@@ -716,8 +726,10 @@ public class MyPartitioner implements Partitioner {
 					</ul>
 				</section>
 				<section>
-				  <h2>Job Quickstart</h2>
+				  <h2>Job Quickstart Demo</h2>
 				  <ul>
+				  	<li>Provides out of the box setup for simple read, process, write scenario.</li>
+				  	<li>Useful for learning, building a quick demo or simply utilizing the generated job.</li>
 				    <li>Maven archetype: <a href="http://bit.ly/1fF0gv7" target="_blank">http://bit.ly/1fF0gv7</a></li>
 				  </ul>
 				</section>
@@ -727,8 +739,6 @@ public class MyPartitioner implements Partitioner {
 				<section>
 					<h1 style="color:green;">Thank You!</h1>
 					<p>Slides can be found at: <a href="http://bit.ly/1b699fk" target="_blank">http://bit.ly/1b699fk</a></p>
-					<img src="images/chubbz.jpg" border="0">
-					<p>(HungryCatItemProcessor)</p>
 				</section>
 			</div>
 			<img src="images/SpringByPivotal.png" style="margin:10px;position:fixed;left:0px;bottom:0px;"/>
