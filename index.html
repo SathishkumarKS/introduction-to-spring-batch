@@ -51,7 +51,6 @@
 								<li><a href="http://refcardz.dzone.com/refcardz/spring-integration" target="_blank">Spring Integration Reference card</a>
 							</ul>
 						</li>
-						<li>Twitter: <a href="http://www.twitter.com/chrisjs01" target="_blank">@chrisjs01</a></li>
 					</ul>
 				</section>
 				<section>
@@ -274,18 +273,6 @@ public interface Tasklet {
 				<section>
 					<h1>Step</h1>
 					<p>Step's encapsulate all the necessary information needed to define the processing for that phase of the Job. A Step is a single state within the flow of a Job.</p>
-				</section>
-				<section>
-					<h2>Basic Chunk Oriented Step Example</h2>
-					<pre><code data-trim class="xml">
-&lt;step id=&quot;exportCatData&quot;&gt;
-    &lt;tasklet allow-start-if-complete=&quot;true&quot;&gt;
-        &lt;chunk reader=&quot;jdbcCatReader&quot; processor=&quot;catSizeProcessor&quot; 
-               writer=&quot;catExportWriter&quot; commit-interval=&quot;200&quot;/&gt;
-    &lt;/tasklet&gt;
-    ...
-&lt;/step&gt;
-					</code></pre>
 				</section>
 				<section>
 					<h2>... Skippable and retryable exception types</h2>
